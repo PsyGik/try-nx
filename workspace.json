@@ -1,0 +1,91 @@
+{
+  "version": 2,
+  "cli": {
+    "defaultCollection": "@nrwl/gatsby"
+  },
+  "defaultProject": "try-gatsby",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/gatsby": {
+      "application": {
+        "style": "none"
+      }
+    }
+  },
+  "projects": {
+    "try-gatsby": {
+      "root": "apps/try-gatsby",
+      "sourceRoot": "apps/try-gatsby/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/gatsby:build",
+          "options": {
+            "outputPath": "apps/try-gatsby/public",
+            "uglify": true,
+            "color": true,
+            "profile": false
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/gatsby:server",
+          "options": {
+            "buildTarget": "try-gatsby:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "try-gatsby:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/try-gatsby/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/try-gatsby"],
+          "options": {
+            "jestConfig": "apps/try-gatsby/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "try-gatsby-e2e": {
+      "root": "apps/try-gatsby-e2e",
+      "sourceRoot": "apps/try-gatsby-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/try-gatsby-e2e/cypress.json",
+            "tsConfig": "apps/try-gatsby-e2e/tsconfig.e2e.json",
+            "devServerTarget": "try-gatsby:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "try-gatsby:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/try-gatsby-e2e/**/*.js"]
+          }
+        }
+      }
+    }
+  }
+}
